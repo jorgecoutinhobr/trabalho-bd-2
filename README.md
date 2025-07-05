@@ -18,9 +18,9 @@ Este projeto foi desenvolvido como parte da disciplina de Projeto de Banco de Da
 
 ## Requisitos Atendidos
 
-1. **Modelo Conceitual:** Disponível em `/modelo_conceitual/`.
+1. **Modelo Conceitual:** Disponível em [Modelo Conceitual .drawio](https://drive.google.com/file/d/13t2XCs8EjKttNhXES9wBtwa8IRrb5XFT/view?usp=sharing) e `/modelo_conceitual/`.
 2. **Esquema Relacional:** Scripts em `/scripts/01_criacao_tabelas.sql`.
-3. **Mínimo de 15 Tabelas:** O banco possui pelo menos 15 tabelas relacionadas ao tema.
+3. **Mínimo de 15 Tabelas:** O banco possui 19 tabelas relacionadas ao tema.
 4. **Stored Procedures/Funções:** Implementadas em `/scripts/02_procedures_funcoes.sql`.
 5. **Triggers:** Implementadas em `/scripts/03_triggers.sql`.
 6. **Visões:** Implementadas em `/scripts/04_visoes.sql`.
@@ -38,12 +38,6 @@ Este projeto foi desenvolvido como parte da disciplina de Projeto de Banco de Da
    - 04_visoes.sql
    - 06_indices.sql
 3. Utilize o script 05_consultas.sql para testar as consultas propostas.
-
-## Observações
-
-- O modelo conceitual e o esquema relacional estão alinhados, conforme exigido.
-- As funções, triggers e consultas foram elaboradas para cobrir cenários reais e regras de negócio do tema escolhido.
-- Consulte os comentários nos scripts para detalhes de implementação.
 
 ## Autores
 
