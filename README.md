@@ -48,6 +48,6 @@ Este projeto foi desenvolvido como parte da disciplina de Projeto de Banco de Da
 ## Autores
 
 - Jorge Coutinho dos Santos Neto
-- Rafaela Abrahao de Sa
+- Rafaela Abrahão de Sá
 - Higor Abreu 
 - Gabriel Villa Verde Reis
