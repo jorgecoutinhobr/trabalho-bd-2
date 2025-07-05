@@ -1,1 +1,53 @@
 # trabalho-bd-2
+# Projeto de Banco de Dados: E-commerce de jogos
+
+## Descrição
+
+Este projeto foi desenvolvido como parte da disciplina de Projeto de Banco de Dados, atendendo aos requisitos propostos para a construção de um sistema completo baseado no tema "E-commerce de Jogos". O objetivo é modelar, implementar e consultar um banco de dados relacional.
+
+## Estrutura do Projeto
+
+- **Modelo Conceitual:** Diagrama Entidade-Relacionamento (DER) representando as entidades, relacionamentos e restrições do sistema.
+- **Esquema Relacional:** Scripts SQL para criação das tabelas no Postgresql.
+- **Stored Procedures/Funções:** Implementação de pelo menos 5 procedimentos armazenados ou funções para operações avançadas.
+- **Triggers:** Implementação gatilhos para automação.
+- **Visões:** Criação visões para facilitar consultas e abstrair complexidade.
+- **Consultas SQL:** Proposição de consultas relevantes e não triviais sobre o banco de dados.
+- **Índices:** Criação de índices para otimizar as consultas propostas.
+- **Itens Opcionais:** Permissões e fragmentação de tabelas.
+
+## Requisitos Atendidos
+
+1. **Modelo Conceitual:** Disponível em `/modelo_conceitual/`.
+2. **Esquema Relacional:** Scripts em `/scripts/01_criacao_tabelas.sql`.
+3. **Mínimo de 15 Tabelas:** O banco possui pelo menos 15 tabelas relacionadas ao tema.
+4. **Stored Procedures/Funções:** Implementadas em `/scripts/02_procedures_funcoes.sql`.
+5. **Triggers:** Implementadas em `/scripts/03_triggers.sql`.
+6. **Visões:** Implementadas em `/scripts/04_visoes.sql`.
+7. **Consultas:** Disponíveis em `/scripts/05_consultas.sql`.
+8. **Índices:** Implementados em `/scripts/06_indices.sql`.
+9. **Itens Opcionais:** [Descrever se implementado].
+
+## Como Executar
+
+1. Instale o Postgresql.
+2. Execute os scripts na ordem:
+   - 01_criacao_tabelas.sql
+   - 02_procedures_funcoes.sql
+   - 03_triggers.sql
+   - 04_visoes.sql
+   - 06_indices.sql
+3. Utilize o script 05_consultas.sql para testar as consultas propostas.
+
+## Observações
+
+- O modelo conceitual e o esquema relacional estão alinhados, conforme exigido.
+- As funções, triggers e consultas foram elaboradas para cobrir cenários reais e regras de negócio do tema escolhido.
+- Consulte os comentários nos scripts para detalhes de implementação.
+
+## Autores
+
+- Jorge Coutinho dos Santos Neto
+- Rafaela Abrahao de Sa
+- Higor Abreu 
+- Gabriel Villa Verde Reis
