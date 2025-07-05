@@ -1,2 +1,0 @@
--- Script de criação das tabelas do banco de dados
--- Adicione aqui os comandos CREATE TABLE para o seu projeto
