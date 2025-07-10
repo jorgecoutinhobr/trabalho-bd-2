@@ -13,3 +13,8 @@ BEGIN
     
 END;
 $$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE TRIGGER tg_atualizar_classificacao_media
+AFTER INSERT OR UPDATE OR DELETE ON avaliacoes_jogo
+FOR EACH ROW
+EXECUTE FUNCTION fn_atualizar_classificacao_media();
