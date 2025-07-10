@@ -166,7 +166,7 @@ ALTER TABLE jogos_usuario
 ADD CONSTRAINT fk_jogos_usuario_usuario FOREIGN KEY (id_usuario) REFERENCES usuarios (id_usuario),
 ADD CONSTRAINT fk_jogos_usuario_jogo FOREIGN KEY (id_jogo) REFERENCES jogos (id_jogo);
 
-ALTER TABLE avaliacoes_jogo 
+ALTER TABLE avaliacoes_jogo
 ADD CONSTRAINT fk_avaliacoes_jogos_usuario FOREIGN KEY (id_usuario, id_jogo) REFERENCES jogos_usuario (id_usuario, id_jogo);
 
 ALTER TABLE requisitos_sistema ADD CONSTRAINT fk_requisitos_jogo FOREIGN KEY (id_jogo) REFERENCES jogos (id_jogo);
@@ -183,8 +183,6 @@ ADD CONSTRAINT fk_itenscarrinho_jogo FOREIGN KEY (id_jogo) REFERENCES jogos (id_
 ADD CONSTRAINT fk_itenscarrinho_dlc FOREIGN KEY (id_dlc) REFERENCES dlcs (id_dlc);
 
 ALTER TABLE noticias ADD CONSTRAINT fk_noticias_jogo FOREIGN KEY (id_jogo_relacionado) REFERENCES jogos (id_jogo);
-
-ALTER TABLE tickets_suporte ADD CONSTRAINT fk_tickets_usuario FOREIGN KEY (id_usuario) REFERENCES usuarios (id_usuario);
 
 ALTER TABLE mensagens_ticket
 ADD CONSTRAINT fk_mensagens_ticket FOREIGN KEY (id_ticket) REFERENCES tickets_suporte (id_ticket),
