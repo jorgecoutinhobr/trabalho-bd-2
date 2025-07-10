@@ -14,7 +14,8 @@ Este projeto foi desenvolvido como parte da disciplina de Projeto de Banco de Da
 - **Visões:** Criação visões para facilitar consultas e abstrair complexidade.
 - **Consultas SQL:** Proposição de consultas relevantes e não triviais sobre o banco de dados.
 - **Índices:** Criação de índices para otimizar as consultas propostas.
-- **Itens Opcionais:** Permissões e fragmentação de tabelas.
+- **Relatório:** Estrutura do banco de dados com lista de tabelas, atributos e relacionamentos. Também possui o relatório comparativo de tempo de execução das consultas com e se índices. 
+
 
 ## Requisitos Atendidos
 
@@ -26,7 +27,7 @@ Este projeto foi desenvolvido como parte da disciplina de Projeto de Banco de Da
 6. **Visões:** Implementadas em `/scripts/04_visoes.sql`.
 7. **Consultas:** Disponíveis em `/scripts/05_consultas.sql`.
 8. **Índices:** Implementados em `/scripts/06_indices.sql`.
-9. **Itens Opcionais:** [Descrever se implementado].
+9. **Relatório** Implementado em [Relatório do Projeto](https://docs.google.com/document/d/1EGmtMMJ8T8DuVHet8bo3V2950g52j_khJlIAOe0lG54/edit?usp=sharing) e `/relatorio/`.
 
 ## Como Executar
 
@@ -43,5 +44,5 @@ Este projeto foi desenvolvido como parte da disciplina de Projeto de Banco de Da
 
 - Jorge Coutinho dos Santos Neto
 - Rafaela Abrahão de Sá
-- Higor Abreu 
+- Higor Marques de Abreu Souza
 - Gabriel Villa Verde Reis
