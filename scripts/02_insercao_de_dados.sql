@@ -1,3 +1,11 @@
+DO $$
+DECLARE
+    num_usuarios INT := 200000;
+    num_jogos INT := 50000;
+    num_noticias INT := 5000;
+    num_promocoes INT := 2000;
+    num_registros_biblioteca BIGINT := 3000000; -- Média de 15 jogos por usuário
+
 BEGIN
     ----------------------------------------------------------------------------------
     -- 1. LIMPEZA DO BANCO DE DADOS
@@ -155,3 +163,10 @@ BEGIN
 
     RAISE NOTICE 'População do banco de dados concluída com sucesso!';
 END $$;
+
+SELECT
+    (SELECT COUNT(*) FROM usuarios) AS total_usuarios,
+    (SELECT COUNT(*) FROM jogos) AS total_jogos,
+    (SELECT COUNT(*) FROM jogos_usuario) AS total_jogos_nas_bibliotecas,
+    (SELECT COUNT(*) FROM promocoes) AS total_promocoes,
+    (SELECT COUNT(*) FROM noticias) AS total_noticias;
