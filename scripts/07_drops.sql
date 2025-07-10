@@ -1,0 +1,14 @@
+DROP INDEX IF EXISTS idx_compras_data_compra;
+DROP INDEX IF EXISTS idx_usuarios_email;
+DROP INDEX IF EXISTS idx_avaliacoes_jogo_id_usuario;
+DROP INDEX IF EXISTS idx_categorias_nome_categoria;
+DROP INDEX IF EXISTS idx_jogo_categoria_id_categoria;
+DROP INDEX IF EXISTS idx_jogos_id_editora;
+DROP INDEX IF EXISTS idx_avaliacoes_jogo_id_jogo;
+DROP INDEX IF EXISTS idx_jogos_usuario_id_jogo;
+DROP INDEX IF EXISTS idx_jogos_usuario_id_usuario_id_jogo;
+DROP INDEX IF EXISTS idx_jogos_usuario_id_jogo_id_usuario;
+DROP INDEX IF EXISTS idx_gin_jogos_titulo;
+DROP INDEX IF EXISTS idx_compras_data_compra;
+DROP INDEX IF EXISTS idx_itens_compra_id_jogo;
+DROP INDEX IF EXISTS idx_avaliacoes_jogo_id_jogo_nota;

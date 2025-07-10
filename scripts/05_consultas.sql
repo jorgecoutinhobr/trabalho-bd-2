@@ -91,6 +91,57 @@ WHERE
     );
 --
 
--- Consulta 5
-    
+-- Consulta 5: todos os jogos que contenham a palavra "Sombras" em seu título 
+EXPLAIN ANALYZE
+SELECT titulo, preco, descricao
+FROM jogos
+WHERE titulo ILIKE '%Sombras%';
+--
+
+-- Consulta 6: faturamento total dos ultimos 30 dias e numero de compras
+EXPLAIN ANALYZE
+SELECT
+    COUNT(id_compra) AS numero_de_compras,
+    SUM(valor_total) AS faturamento_no_periodo
+FROM compras
+WHERE data_compra >= NOW() - INTERVAL '30 days';
+--
+
+-- Consulta 7: Total de vendas de jogos ordenado por titulo
+EXPLAIN ANALYZE
+SELECT
+    j.titulo,
+    (SELECT COUNT(*) FROM itens_compra ic WHERE ic.id_jogo = j.id_jogo) AS total_de_vendas
+FROM
+    jogos j
+ORDER BY
+    j.titulo;
+--
+
+-- Consulta 8: Quantidade de pessoa que possuem o jogo com id 50
+EXPLAIN ANALYZE
+SELECT COUNT(*)
+FROM jogos_usuario
+WHERE id_jogo = 50;
+--
+
+-- Consulta 9 - tickets status aberto e alta
+EXPLAIN ANALYZE
+SELECT id_ticket, id_usuario, assunto, data_abertura
+FROM tickets_suporte
+WHERE status = 'ABERTO' AND prioridade = 'ALTA';
+--
+
+-- Consulta 10: Buscar todas as compras feitas em uma determinada data
+EXPLAIN ANALYZE SELECT
+    c.id_compra,
+    c.id_usuario,
+    c.data_compra,
+    i.id_jogo
+FROM
+    compras c
+JOIN
+    itens_compra i ON c.id_compra = i.id_compra
+WHERE
+    c.data_compra = '2024-07-10';
 --
