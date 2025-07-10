@@ -138,4 +138,5 @@ BEGIN
 
     RAISE NOTICE 'Jogo % adicionado à biblioteca do usuário % com sucesso.', p_id_jogo, p_id_usuario;
 
-END;
+END
+$$;
