@@ -129,9 +129,9 @@ BEGIN
     ) j;
 
     RAISE NOTICE 'Criando tickets de suporte...';
-    INSERT INTO tickets_suporte (id_usuario, assunto, descricao, status, data_abertura, data_ultima_atualizacao, prioridade)
+    INSERT INTO tickets_suporte (assunto, descricao, status, data_abertura, data_ultima_atualizacao, prioridade)
     SELECT
-        id_usuario, 'Problema com o jogo ' || (SELECT titulo FROM jogos ORDER BY random() LIMIT 1),
+        'Problema com o jogo ' || (SELECT titulo FROM jogos ORDER BY random() LIMIT 1),
         'Descrição do problema gerada aleatoriamente.', (ARRAY['ABERTO', 'EM ANDAMENTO', 'FECHADO'])[floor(random()*3)+1],
         NOW() - (random() * 90) * INTERVAL '1 day', NOW() - (random() * 30) * INTERVAL '1 day',
         (ARRAY['BAIXA', 'NORMAL', 'ALTA'])[floor(random()*3)+1]
@@ -139,7 +139,7 @@ BEGIN
 
     RAISE NOTICE 'Adicionando mensagens aos tickets...';
     INSERT INTO mensagens_ticket (id_ticket, id_remetente, conteudo, data_envio)
-    SELECT id_ticket, id_usuario, 'Esta é a primeira mensagem do ticket, enviada pelo usuário.', data_abertura
+    SELECT id_ticket,(SELECT id_usuario FROM usuarios ORDER BY random() LIMIT 1), 'Esta é a primeira mensagem do ticket, enviada pelo usuário.', data_abertura
     FROM tickets_suporte;
 
     INSERT INTO mensagens_ticket (id_ticket, id_remetente, conteudo, data_envio)
@@ -198,6 +198,20 @@ BEGIN
 END $$;
 
 SELECT
+    (SELECT COUNT(*) FROM desenvolvedoras) AS total_desenvolvedoras,
+    (SELECT COUNT(*) FROM editoras) AS total_editoras,
+    (SELECT COUNT(*) FROM categorias) AS total_categorias,
+    (SELECT COUNT(*) FROM dlcs) AS total_dlcs,
+    (SELECT COUNT(*) FROM avaliacoes_jogo) AS total_avaliacoes,
+    (SELECT COUNT(*) FROM carrinhos_compra) AS total_carrinhos,
+    (SELECT COUNT(*) FROM itens_carrinho) AS total_itens_carrinho,
+    (SELECT COUNT(*) FROM itens_compra) AS total_itens_compra,
+    (SELECT COUNT(*) FROM compras) AS total_compras,
+    (SELECT COUNT(*) FROM tickets_suporte) AS total_tickets,
+    (SELECT COUNT(*) FROM mensagens_ticket) AS total_mensagens_ticket,
+    (SELECT COUNT(*) FROM requisitos_sistema) AS total_requisitos_sistema,
+    (SELECT COUNT(*) FROM jogo_categoria) AS total_jogo_categoria,
+    (SELECT COUNT(*) FROM jogo_promocao) AS total_jogo_promocao,
     (SELECT COUNT(*) FROM usuarios) AS total_usuarios,
     (SELECT COUNT(*) FROM jogos) AS total_jogos,
     (SELECT COUNT(*) FROM jogos_usuario) AS total_jogos_nas_bibliotecas,
