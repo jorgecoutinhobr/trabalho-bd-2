@@ -1,3 +1,11 @@
+DO $$
+DECLARE
+    num_usuarios INT := 200000;
+    num_jogos INT := 50000;
+    num_noticias INT := 5000;
+    num_promocoes INT := 2000;
+    num_registros_biblioteca BIGINT := 3000000; -- Média de 15 jogos por usuário
+
 BEGIN
     ----------------------------------------------------------------------------------
     -- 1. LIMPEZA DO BANCO DE DADOS
@@ -153,5 +161,64 @@ BEGIN
         data_ultima_atualizacao + INTERVAL '1 hour'
     FROM tickets_suporte WHERE status != 'FECHADO' AND random() < 0.8;
 
+    -- Passo 1: Gerar as compras.
+    RAISE NOTICE 'Gerando registros de compras...';
+    -- CORREÇÃO APLICADA: Removida a coluna "metodo_pagamento".
+    INSERT INTO compras (id_usuario, data_compra, valor_total, status_compra)
+    WITH usuarios_compradores AS (
+        SELECT id_usuario, data_registro FROM usuarios WHERE random() < 0.4
+    )
+    SELECT
+        uc.id_usuario,
+        uc.data_registro + (random() * (NOW() - uc.data_registro))::interval,
+        0, -- Valor total será atualizado depois
+        'APROVADA'
+    FROM usuarios_compradores uc
+    CROSS JOIN LATERAL generate_series(1, floor(random() * 3 + 1)::int);
+
+    -- Passo 2: Gerar os itens para cada compra.
+    RAISE NOTICE 'Gerando itens de compra com preços históricos...';
+    -- CORREÇÃO APLICADA: Inserindo em "preco_unitario" e removendo colunas inexistentes.
+    INSERT INTO itens_compra (id_compra, id_jogo, id_dlc, preco_unitario)
+    WITH compras_info AS (
+        SELECT id_compra, data_compra FROM compras
+    )
+    SELECT
+        ci.id_compra,
+        jogos_comprados.id_jogo,
+        NULL,
+        -- Calcula o preço unitário no momento da compra, aplicando o desconto se houver.
+        round(jogos_comprados.preco * (1 - COALESCE(promo.valor_desconto, 0) / 100), 2)
+    FROM compras_info ci
+    CROSS JOIN LATERAL (
+        SELECT id_jogo, preco FROM jogos ORDER BY random() LIMIT floor(random() * 4 + 1)::int
+    ) AS jogos_comprados
+    LEFT JOIN LATERAL (
+        SELECT p.valor_desconto FROM jogo_promocao jp
+        JOIN promocoes p ON jp.id_promocao = p.id_promocao
+        WHERE jp.id_jogo = jogos_comprados.id_jogo AND ci.data_compra BETWEEN p.data_inicio AND p.data_fim
+        ORDER BY p.valor_desconto DESC LIMIT 1
+    ) AS promo ON true;
+
+    -- Passo 3: Atualizar o valor total de cada compra.
+    RAISE NOTICE 'Atualizando valores totais das compras...';
+    -- CORREÇÃO APLICADA: Somando "preco_unitario".
+    WITH totais_compra AS (
+      SELECT id_compra, SUM(preco_unitario) AS total_calculado
+      FROM itens_compra
+      GROUP BY id_compra
+    )
+    UPDATE compras c
+    SET valor_total = tc.total_calculado
+    FROM totais_compra tc
+    WHERE c.id_compra = tc.id_compra;
+
     RAISE NOTICE 'População do banco de dados concluída com sucesso!';
 END $$;
+
+SELECT
+    (SELECT COUNT(*) FROM usuarios) AS total_usuarios,
+    (SELECT COUNT(*) FROM jogos) AS total_jogos,
+    (SELECT COUNT(*) FROM jogos_usuario) AS total_jogos_nas_bibliotecas,
+    (SELECT COUNT(*) FROM promocoes) AS total_promocoes,
+    (SELECT COUNT(*) FROM noticias) AS total_noticias;
