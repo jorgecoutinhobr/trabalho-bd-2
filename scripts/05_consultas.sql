@@ -126,7 +126,7 @@ WHERE id_jogo = 50;
 
 -- Consulta 9 - tickets status aberto e alta
 EXPLAIN ANALYZE
-SELECT id_ticket, id_usuario, assunto, data_abertura
+SELECT id_ticket, assunto, data_abertura
 FROM tickets_suporte
 WHERE status = 'ABERTO' AND prioridade = 'ALTA';
 --
