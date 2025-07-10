@@ -56,7 +56,6 @@ UsuariosSimilares AS (
     WHERE ju.id_jogo IN (SELECT id_jogo FROM JogosDoUsuarioAlvo)
       AND ju.id_usuario != 123
 )
-
 SELECT
     j.titulo,
     COUNT(ju.id_usuario) AS popularidade_entre_similares
@@ -81,7 +80,7 @@ EXPLAIN ANALYZE SELECT
 FROM
     usuarios u
 JOIN
-    jogos_usuario ju_base ON u.id_usuario = ju_base.id_usuario AND ju_base.id_jogo = 45)
+    jogos_usuario ju_base ON u.id_usuario = ju_base.id_usuario AND ju_base.id_jogo = 45
 WHERE
     NOT EXISTS (
         SELECT 1
