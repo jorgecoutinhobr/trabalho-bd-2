@@ -37,3 +37,12 @@ CREATE INDEX IF NOT EXISTS idx_itens_compra_id_jogo ON itens_compra (id_jogo);
 -- indice 8
 CREATE INDEX IF NOT EXISTS idx_jogos_usuario_id_jogo_id_usuario ON jogos_usuario (id_jogo, id_usuario);
 --
+
+-- indice 9
+CREATE INDEX IF NOT EXISTS idx_jogos_id_editora ON jogos (id_editora);
+CREATE INDEX IF NOT EXISTS idx_jogos_id_desenvolvedora ON jogos (id_desenvolvedora);
+--
+
+-- indice 10
+CREATE INDEX IF NOT EXISTS idx_compras_data_compra ON compras (data_compra);
+--
