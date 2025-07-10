@@ -5,7 +5,6 @@ DECLARE
     maior_desconto DECIMAL(5,2);
     preco_final DECIMAL(10,2);
 BEGIN
-    -- Obter o preço original do jogo
     SELECT preco INTO preco_original FROM jogos WHERE id_jogo = id_jogo_param;
 
     SELECT MAX(p.valor_desconto)

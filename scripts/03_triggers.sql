@@ -14,7 +14,26 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+
+
 CREATE OR REPLACE TRIGGER tg_atualizar_classificacao_media
 AFTER INSERT OR UPDATE OR DELETE ON avaliacoes_jogo
 FOR EACH ROW
 EXECUTE FUNCTION fn_atualizar_classificacao_media();
+
+CREATE OR REPLACE FUNCTION fn_atualizar_timestamp_carrinho()
+RETURNS TRIGGER AS $$
+BEGIN
+    UPDATE carrinhos_compra
+    SET ultima_atualizacao = NOW()
+    WHERE id_carrinho = COALESCE(NEW.id_carrinho, OLD.id_carrinho);
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE TRIGGER tg_atualizar_timestamp_carrinho
+AFTER INSERT OR UPDATE OR DELETE ON itens_carrinho
+FOR EACH ROW
+EXECUTE FUNCTION fn_atualizar_timestamp_carrinho();
+

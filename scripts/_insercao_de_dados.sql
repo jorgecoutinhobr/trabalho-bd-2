@@ -7,9 +7,6 @@ DECLARE
     num_registros_biblioteca BIGINT := 3000000; -- Média de 15 jogos por usuário
 
 BEGIN
-    ----------------------------------------------------------------------------------
-    -- 1. LIMPEZA DO BANCO DE DADOS
-    ----------------------------------------------------------------------------------
     RAISE NOTICE 'Iniciando limpeza do banco de dados...';
     TRUNCATE TABLE
         usuarios, desenvolvedoras, editoras, jogos, dlcs, categorias, promocoes, noticias,
@@ -18,10 +15,6 @@ BEGIN
         tickets_suporte, mensagens_ticket
     RESTART IDENTITY CASCADE;
 
-
-    ----------------------------------------------------------------------------------
-    -- 2. DADOS BASE
-    ----------------------------------------------------------------------------------
     RAISE NOTICE 'Inserindo dados base (desenvolvedoras, editoras, categorias)...';
     INSERT INTO desenvolvedoras (nome_desenvolvedora, site) VALUES
     ('Pixel Dreams', 'https://www.pixeldreams.com.br'), ('CyberConnect', 'https://www.cyberconnect.com'),
@@ -37,11 +30,6 @@ BEGIN
     INSERT INTO categorias (nome_categoria) VALUES
     ('Ação'), ('Aventura'), ('RPG'), ('Estratégia'), ('Simulação'), ('Corrida'),
     ('Indie'), ('Terror'), ('Cooperativo'), ('Mundo Aberto'), ('Souls-like');
-
-
-    ----------------------------------------------------------------------------------
-    -- 3. POPULAÇÃO MASSIVA USANDO VARIÁVEIS
-    ----------------------------------------------------------------------------------
 
     RAISE NOTICE 'Populando % usuários...', num_usuarios;
     INSERT INTO usuarios (id_usuario, nome_usuario, email, senha_hash, data_registro, ultimo_login)
@@ -161,9 +149,7 @@ BEGIN
         data_ultima_atualizacao + INTERVAL '1 hour'
     FROM tickets_suporte WHERE status != 'FECHADO' AND random() < 0.8;
 
-    -- Passo 1: Gerar as compras.
     RAISE NOTICE 'Gerando registros de compras...';
-    -- CORREÇÃO APLICADA: Removida a coluna "metodo_pagamento".
     INSERT INTO compras (id_usuario, data_compra, valor_total, status_compra)
     WITH usuarios_compradores AS (
         SELECT id_usuario, data_registro FROM usuarios WHERE random() < 0.4
@@ -176,9 +162,7 @@ BEGIN
     FROM usuarios_compradores uc
     CROSS JOIN LATERAL generate_series(1, floor(random() * 3 + 1)::int);
 
-    -- Passo 2: Gerar os itens para cada compra.
     RAISE NOTICE 'Gerando itens de compra com preços históricos...';
-    -- CORREÇÃO APLICADA: Inserindo em "preco_unitario" e removendo colunas inexistentes.
     INSERT INTO itens_compra (id_compra, id_jogo, id_dlc, preco_unitario)
     WITH compras_info AS (
         SELECT id_compra, data_compra FROM compras
@@ -187,7 +171,6 @@ BEGIN
         ci.id_compra,
         jogos_comprados.id_jogo,
         NULL,
-        -- Calcula o preço unitário no momento da compra, aplicando o desconto se houver.
         round(jogos_comprados.preco * (1 - COALESCE(promo.valor_desconto, 0) / 100), 2)
     FROM compras_info ci
     CROSS JOIN LATERAL (
@@ -200,9 +183,7 @@ BEGIN
         ORDER BY p.valor_desconto DESC LIMIT 1
     ) AS promo ON true;
 
-    -- Passo 3: Atualizar o valor total de cada compra.
     RAISE NOTICE 'Atualizando valores totais das compras...';
-    -- CORREÇÃO APLICADA: Somando "preco_unitario".
     WITH totais_compra AS (
       SELECT id_compra, SUM(preco_unitario) AS total_calculado
       FROM itens_compra
